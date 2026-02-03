@@ -19,6 +19,7 @@ A clean authentication app built with React Native and Expo. Swiss-inspired desi
 - [Validation Rules](#validation-rules)
 - [Tech Stack](#tech-stack)
 - [Running on iOS](#running-on-ios)
+- [Deployment](#deployment)
 - [Troubleshooting](#troubleshooting)
 
 ## Quick Start
@@ -220,6 +221,28 @@ xcrun xctrace list devices
 - To remove an app: `xcrun devicectl device uninstall app --device UDID BUNDLE_ID`
 
 **Bundle Identifier:** `com.anonymous.pegasus`
+
+## Deployment
+
+Deploy the web version to Vercel as a static site.
+
+**Option 1: Vercel CLI**
+```bash
+npm i -g vercel
+vercel
+```
+
+**Option 2: GitHub Integration**
+1. Push your repo to GitHub
+2. Go to [vercel.com](https://vercel.com) and import your repo
+3. Vercel auto-detects the config from `vercel.json`
+4. Deploy
+
+**Manual build:**
+```bash
+npx expo export --platform web
+# Static files are in the dist/ folder
+```
 
 ## Troubleshooting
 
