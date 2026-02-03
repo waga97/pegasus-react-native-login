@@ -15,6 +15,12 @@ jest.mock('expo-linear-gradient', () => ({
   LinearGradient: 'LinearGradient',
 }));
 
+// Mock expo-crypto
+jest.mock('expo-crypto', () => ({
+  digestStringAsync: jest.fn((algorithm, input) => Promise.resolve(`hashed_${input}`)),
+  CryptoDigestAlgorithm: { SHA256: 'SHA256' },
+}));
+
 // Mock react-native-safe-area-context
 jest.mock('react-native-safe-area-context', () => ({
   SafeAreaProvider: ({ children }) => children,

@@ -2,6 +2,8 @@
 
 A clean authentication app built with React Native and Expo. Swiss-inspired design with dark mode, live clock, and route protection.
 
+**Live Web App:** [pegasus.arshad.quest](https://pegasus.arshad.quest/)
+
 ## Demo
 
 [![Demo Video](https://img.youtube.com/vi/S9Jd89DGDzk/0.jpg)](https://youtube.com/shorts/S9Jd89DGDzk)
@@ -12,6 +14,8 @@ A clean authentication app built with React Native and Expo. Swiss-inspired desi
 - [Quick Start](#quick-start)
 - [Test Accounts](#test-accounts)
 - [Features](#features)
+- [Security](#security)
+- [Architecture](#architecture)
 - [Route Protection](#route-protection)
 - [Project Structure](#project-structure)
 - [Scripts](#scripts)
@@ -64,6 +68,28 @@ These show as "DEMO" accounts on the home screen. Sign up your own and you'll se
 - Bold typography
 - Minimal, functional UI
 
+## Security
+
+**Password Hashing**
+- All passwords hashed using SHA-256 via `expo-crypto`
+- Plain text passwords are never stored
+- Verification compares hashes, not raw passwords
+
+**Input Sanitization**
+- XSS protection: removes `< > " ' &` characters
+- Email normalization: lowercase + trim
+- Name sanitization: letters, spaces, hyphens only
+
+## Architecture
+
+The auth logic is split into layers to keep things clean and testable:
+
+- **AuthContext** handles React state only (user, loading, etc.)
+- **AuthService** handles the actual work (login, signup, storage)
+- **crypto.ts** and **sanitizers.ts** are small utility modules
+
+This makes it easy to swap AsyncStorage for a real API later—just update AuthService.
+
 ## Route Protection
 
 The app uses conditional screen rendering for auth protection:
@@ -91,14 +117,13 @@ The app uses conditional screen rendering for auth protection:
 │   ├── hooks/          # Custom hooks
 │   ├── navigation/     # Stack navigator with route guards
 │   ├── screens/        # App screens
+│   ├── services/       # AuthService (business logic)
 │   ├── styles/         # Shared styles
 │   ├── types/          # TypeScript interfaces
-│   └── utils/          # Validation functions
+│   └── utils/          # Validation, crypto, sanitizers
 ├── App.tsx             # Root component with navigation
 ├── app.json            # Expo config
-├── .eslintrc.js        # ESLint config
-├── .prettierrc         # Prettier config
-├── jest.config.js      # Jest config
+├── vercel.json         # Vercel deployment config
 └── tsconfig.json       # TypeScript config
 ```
 
@@ -177,6 +202,7 @@ npm test AuthContext        # Only auth tests
 - TypeScript (strict mode)
 - React Navigation 7
 - AsyncStorage (session persistence)
+- expo-crypto (password hashing)
 - Jest + React Testing Library
 - ESLint + Prettier
 
@@ -224,7 +250,9 @@ xcrun xctrace list devices
 
 ## Deployment
 
-Deploy the web version to Vercel as a static site.
+The web version is live at [pegasus.arshad.quest](https://pegasus.arshad.quest/).
+
+To deploy your own:
 
 **Option 1: Vercel CLI**
 ```bash

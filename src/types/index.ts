@@ -7,7 +7,7 @@ export interface User {
 }
 
 export interface StoredUser extends User {
-  password: string;
+  passwordHash: string;
 }
 
 export interface UsersDatabase {
