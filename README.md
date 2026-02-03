@@ -2,8 +2,13 @@
 
 A clean authentication app built with React Native and Expo. Swiss-inspired design with dark mode, live clock, and route protection.
 
+## Demo
+
+[![Demo Video](https://img.youtube.com/vi/S9Jd89DGDzk/0.jpg)](https://youtube.com/shorts/S9Jd89DGDzk)
+
 ## Table of Contents
 
+- [Demo](#demo)
 - [Quick Start](#quick-start)
 - [Test Accounts](#test-accounts)
 - [Features](#features)
@@ -13,6 +18,7 @@ A clean authentication app built with React Native and Expo. Swiss-inspired desi
 - [Testing](#testing)
 - [Validation Rules](#validation-rules)
 - [Tech Stack](#tech-stack)
+- [Running on iOS](#running-on-ios)
 - [Troubleshooting](#troubleshooting)
 
 ## Quick Start
@@ -172,6 +178,48 @@ npm test AuthContext        # Only auth tests
 - AsyncStorage (session persistence)
 - Jest + React Testing Library
 - ESLint + Prettier
+
+## Running on iOS
+
+### Simulator
+```bash
+npm run ios:simulator
+```
+
+### Physical Device
+
+**Prerequisites:**
+- Device connected via USB
+- Device unlocked and trusted
+- Developer Mode enabled (Settings → Privacy & Security → Developer Mode)
+
+**Using Expo Go (easiest):**
+```bash
+npm start
+# Scan QR code with Camera app, opens in Expo Go
+```
+
+**Using native build:**
+```bash
+npm run ios:device
+```
+
+If automatic signing fails, run manually:
+```bash
+cd ios && xcodebuild -workspace Pegasus.xcworkspace -configuration Debug -scheme Pegasus -destination 'id=YOUR_DEVICE_UDID' -allowProvisioningUpdates
+```
+
+Find your device UDID:
+```bash
+xcrun xctrace list devices
+```
+
+**Free Developer Profile Limits:**
+- Maximum 3 apps per device
+- Apps expire after 7 days
+- To remove an app: `xcrun devicectl device uninstall app --device UDID BUNDLE_ID`
+
+**Bundle Identifier:** `com.anonymous.pegasus`
 
 ## Troubleshooting
 
